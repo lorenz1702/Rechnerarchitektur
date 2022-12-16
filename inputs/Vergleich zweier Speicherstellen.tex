@@ -1,0 +1,10 @@
+\subsubsection*{Vergleich zweier Speicherstellen}
+\begin{lstlisting}[language={[ARM]Assembler}]
+  MOVF    adr1, W         ;ein Argument ins W-Register holen
+  XORWF   adr2, W         ;XOR verknuepfen und Ergebnis in 
+                          ;W-Register, so bleiben adr1 und 
+                          ;adr2 unveraendert
+  BTFSC   status, Zflag
+  GOTO    sindGleich
+  GOTO    sindUngleich
+  \end{lstlisting}

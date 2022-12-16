@@ -1,0 +1,12 @@
+  \subsubsection*{PORT RA und TRIS RA Initialisierungssequenz}
+  \begin{lstlisting}[language={[x86masm]Assembler}]
+    BSF     status, rp0    ;auf Bank 1 umschalten, dort sind die 
+    BCF     trisa, 0       ;TRIS-Register. RA0 wird Ausgang
+    BCF     trisa, 1       ;RA1 wird ebenfalls Ausgang
+    BCF     status, rq0    ;zurueck auf Bank 0 schalten 
+    ... 
+    ... 
+    BSF     porta, 0       ;setzt den Pegel an RA0 auf high
+    BCF     porta, 1       ;setzt den Pegel an Ra1 auf low
+
+    \end{lstlisting}

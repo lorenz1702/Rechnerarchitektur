@@ -1,0 +1,13 @@
+\subsubsection*{Vergleich zweier Speicherstellen auf größer / kleiner}
+\begin{lstlisting}[language={[mips]Assembler}]
+  MOVF    adr1, W         ;ein Argument ins W-Register holen
+  SUBWF   adr2, W         ;subtrahiere W von Inhalt von adr2
+                          ;und schreib Ergebnis ins 
+                          ;W-Register, so bleiben adr1 und adr2
+                          ;unveraendert
+  BTFSC   status,Zflag
+  GOTO    sindGleich
+  BTFSC   status, CFlag
+  GOTO    kleiner         ;es gab einen Ueberlauf im Carry
+  GOTO    groesser        
+  \end{lstlisting}

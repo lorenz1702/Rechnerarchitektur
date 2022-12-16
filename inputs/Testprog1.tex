@@ -1,0 +1,74 @@
+\subsubsection*{Testprog1}
+\begin{lstlisting}[language={[x86masm]Assembler}]
+  ;*******************************************************
+  ; Testprog1.src
+  ;*******************************************************
+    device 16f84
+  ;Symbol definieren
+  status    equ 3
+  zero      equ 2
+  rp0 	    equ 5
+  trisa	    equ 5
+  trisb	    equ 6
+  porta	    equ 5
+  portb	    equ 6
+  
+  ;Hex-Zahlen: h am Ende, bei Zahlen mit Buchstaben an erster Stelle eine 0 davor
+  wert	    equ 0ch
+  alterw	equ 13
+  counter   equ 14
+  
+  
+    org 0
+    
+  ;Einsprung beim Einschalten (Power on)
+  cold
+    bsf	    status,rp0	;auf Bank 1 umschalten
+    movlw	0
+    movwf	trisb		;PortB wird komplett als Ausgang geschaltet
+    bcf 	trisa,3		;RA3 wird Ausgang (Carry)
+    bcf	    status,rp0	;zurueck auf Bank 0
+  
+  ;Definieren von alterw mit aktuellem Wert an RA0
+    movf	porta,w		;PortA lesen
+    andlw	00000001b
+    movwf	alterw
+  
+  ;Hauptschleife
+  loop
+    clrf	counter		;Reset und Startwert
+    clrf	portb
+
+  loop1
+  ;Reset aktiv?
+    btfss	porta,1		;Reseteingang
+    goto 	loop
+  ;Inhibit aktiv?
+    btfsc	porta,2		;Inhibiteingang
+    goto 	loop1
+  
+  ;Takteingang lesen
+    movf	porta,w		;PortA komplett eingelesen
+    andlw	1		    ;Nur R0 ist von Interesse
+  
+    xorwf	alterw,w	;Wenn beide gleich, keine Flanke
+    btfsc	status,zero	;Beide gleich, Zero gesetzt
+    goto	loop1		;Nichts passiert
+    movlw   1
+    xorwf	alterw		;Beinhaltet neuen Pegel an RA0
+    btfss	alterw,0
+    goto	loop1
+  
+  ;Richtige Flanke gefunden
+    bcf	porta,3
+    incf	counter		;Zaehler erhoehen
+    movf 	counter,w
+    movwf	portb
+    btfss	status,zero	;Zaehlerueberlauf
+    goto	loop1
+    bsf	    porta,3		;Carryausgang setzen
+    goto	loop1
+  
+    end
+
+\end{lstlisting}
