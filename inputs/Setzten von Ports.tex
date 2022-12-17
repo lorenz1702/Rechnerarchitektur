@@ -1,0 +1,49 @@
+\subsubsection*{Setzten von Ports}
+
+\begin{lstlisting}[language=avr]
+Start
+    BSF     status, rq0     
+    MOVLW   0
+    MOVWF   trisb           ;RB0-RB7 wird Ausgang
+    BSF     trisa, 0        ;RA0 wird Eingang
+    BCF     status, rq0
+
+Hauptprogramm
+    ;CLRF    RB              ;Setz alle Ausgaenge auf 0
+    BTFSS   RA, 0           
+    GOTO    Hauptprogramm
+    CLRF    counter         ;setzt counter auf 0
+    INCF    counter         ;bring counter auf 1
+    MOVLW   counter
+    MOVWF   real_counter    ;setzt real_counter auf counter
+    CLRW                    ;setzt W-Register auf 0
+    GOTO    Schleife
+
+Schleife
+    BTFSS   RA, 0
+    GOTO    Hauptprogramm
+    BTFSC   counter, 0
+    ADDLW   1
+    RRF     counter
+    GOTO    Schleife
+
+Ausgabe
+    CALL    Tabelle
+    MOVWF   portb
+    INCF    real_counter
+    MOVLW   real_counter
+    MOVWF   counter
+    GOTO    Schleife
+    
+Tabelle
+    ADDWF   pcl
+    RETLW   1000 0000b
+    RETLW   1000 0001b
+    RETLW   1000 0011b
+    RETLW   1000 0111b
+    RETLW   1000 1111b
+    CLRF    real_counter
+    RETLW   1001 1111b
+
+
+\end{lstlisting}

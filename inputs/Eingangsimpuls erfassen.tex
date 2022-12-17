@@ -12,9 +12,9 @@ Label2
   BTFSS   porta, 0
   GOTO    Label2      ;wenn das ueberspringt gab es eine ssteigende Flanke
                       ;Ab jetzt messen -> solange incrementieren
-\end{lstlisting}
-\texttt{8-bitzähler geht bis 512 $\mu s$}
-\begin{lstlisting}[language=avr]
+
+;8-bitzaehler geht bis 512 s
+
 Label3
   INCF    Dauer, 1    ;1 Takt
   BTFSC   porta, 0    ;1
