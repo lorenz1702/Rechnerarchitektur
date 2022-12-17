@@ -1,0 +1,48 @@
+;*********************************
+;   AUFGABE 12
+;*********************************
+
+device 16f84
+;Symbole definieren
+delaycnt    equ     
+
+delay166
+    movlw   52
+    movwf   delaycnt
+delay166_a
+    decfsz  delaycnt
+    goto delay166_a
+    return
+
+
+delay625
+    movlw   206
+    movwf   delaycnt
+delay625_a
+    decfsz  delaycnt
+    goto    delay625_a
+    return
+
+warte_null
+    btfss   rb,4            ;Nulldurchgang?
+    goto    warte_null
+;Nulldurchgang gefunden
+    call    delay166
+;Schalter einlesen
+    movf    portb,w          ;Schalter = 0?
+    andlw   15               ;Obere 4 Bits auf 0 setzen
+    btfsc   status,zero
+    goto    warte_null
+
+    movwf   loopcnt
+
+loop
+    call    delay625
+    decfsz  loopcnt
+    goto    loop
+
+;TRIAC einschalten
+    bsf     rb,5
+    call    delay166
+    bcf     rb,5
+    goto    warte_null

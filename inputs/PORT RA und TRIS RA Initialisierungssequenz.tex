@@ -1,5 +1,5 @@
   \subsubsection*{PORT RA und TRIS RA Initialisierungssequenz}
-  \begin{lstlisting}[language={[x86masm]Assembler}]
+  \begin{lstlisting}[language=avr]
     BSF     status, rp0    ;auf Bank 1 umschalten, dort sind die 
     BCF     trisa, 0       ;TRIS-Register. RA0 wird Ausgang
     BCF     trisa, 1       ;RA1 wird ebenfalls Ausgang

@@ -1,0 +1,59 @@
+\subsubsection*{Gib das Bild eines Würfels aus}
+Es soll gezählt werden wie oft der RA0 Schalter gedrückt wird. Diese Zahl sollen mit einem Würfel ausgegeben werden.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=7cm]{inputs/Würfel.jpg}
+\end{figure}
+\begin{lstlisting}[language=avr]
+Start
+    CLRF    counter
+    BSF     status, rp0
+    MOVLW   0           ;beide Zeilen koennte 
+    MOVWF   06          ;man auch mit CLRF 06 ersetzten
+    BCF     05,1    
+    BCF     status, rp0
+
+Hauptprogramm
+    MOVLW   1
+    MOVWF   counter
+
+Loop
+    BTFSC   RA,0
+    GOTO    Ausgabe     
+    INCF    counter
+    MOVLW   7
+    XORWF   counter,w
+    BTFSC   status, 2
+    GOTO    Hauptprogramm
+    GOTO    Loop
+
+Ausgabe
+    MOVF    counter, w
+    CALL    Tabelle1
+    MOVWF   portb
+    MOVF    counter, w
+    CALL    Tabelle2
+    MOVWF   porta
+    GOTO    Hauptprogramm
+
+Tabelle1
+    ADDWF   pcl
+    nop
+    RETLW   0
+    RETLW   00010001b
+    RETLW   00010001b
+    RETLW   01010101b
+    RETLW   01010101b
+    RETLW   11011101b
+
+Tabelle1
+    ADDWF   
+    nop
+    RETLW   00000010b
+    RETLW   00000000b
+    RETLW   00000010b
+    RETLW   00000000b
+    RETLW   00000010b
+    RETLW   00000000b
+
+  \end{lstlisting}

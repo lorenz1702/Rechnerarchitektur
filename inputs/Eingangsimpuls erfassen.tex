@@ -4,7 +4,7 @@ ms) erfasst und daraus einen 8 x so langen Ausgangsimpuls erzeugt. Der Ausgangsi
 dann erscheinen, wenn der Eingangsimpuls wieder weg ist. Die Quarzfrequenz beträgt 4 MHz; ein
 einfacher Befehl benoetigt somit 1 $\mu s$.\\
 \texttt{Pegel prüfen bis eine $1$ kommt}
-\begin{lstlisting}[language={[mips]Assembler}]
+\begin{lstlisting}[language=avr]
 Label1
   BTFSC   porta, 0
   GOTO    Label1      ;warten auf low
@@ -14,15 +14,13 @@ Label2
                       ;Ab jetzt messen -> solange incrementieren
 \end{lstlisting}
 \texttt{8-bitzähler geht bis 512 $\mu s$}
-\begin{lstlisting}[language={[mips]Assembler}]
+\begin{lstlisting}[language=avr]
 Label3
   INCF    Dauer, 1    ;1 Takt
   BTFSC   porta, 0    ;1
   GOTO    Label3      ;2 Vier Takte fuer den letzten 3
    
-  \end{lstlisting}
-  \texttt{Ausgabe}
-\begin{lstlisting}[language={[mips]Assembler}]
+;Ausgabe
 Label3
   MOVLW   8           ;ein Register wird auf 8 gesetzt
   MOVWF   Schleife    ;ist eine Variable

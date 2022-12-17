@@ -1,0 +1,17 @@
+\subsubsection*{5 Multiplikator}
+In \texttt{HWert1} steht wie viele überläufe es gab.51
+\begin{lstlisting}[language=avr]
+CLRF    HWert1      ;Loescht HWert1
+BCF     status, 0   ;Carryflag wird geloescht Carryflag ist auf 0
+MOVF    LWert1, w   ;LWert in das W-Register
+RLF     LWert1      ;verdoppelt den LWert
+RLF     HWert1      ;moeglicher Ueberlauf der Operation wird in 
+                    ;HWert von rechts geschoben. Im Carray steht 0.
+RLF     LWert1      ;verdoppelt den LWert
+RLF     HWert1      ;moeglicher Ueberlauf der Operation wird in 
+                    ;HWert von rechts geschoben. Im Carray steht 0.
+ADDWF   LWert       ;Der urspruengliche LWert wird noch dazu addiert
+BTFSC   status, 0   ;Es wird geprueft ob Carry 0 ist wenn nicht 
+INCF    HWert1      ;wird HWert1 inkrementiert.
+\end{lstlisting}
+
