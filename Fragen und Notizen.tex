@@ -9,7 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{listings}
-%\usepackage{times,a4wide}
+\usepackage{a4wide}
 \usepackage{float}
 \usepackage{color}
 \usepackage{tikz}
@@ -43,14 +43,23 @@
 }
 
 
-\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt}
-\lstset{tabsize=4, basicstyle=\footnotesize\sffamily}
-\lstset{commentstyle=\itshape\color{green!60!black}}
-\lstset{frame=single,frameround=tttt}
-\lstset{tabsize=4,numbersep=8pt,numbersep=8pt,stepnumber=1}
-\lstset{breaklines=true,
-postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}
-\lstset{language=avr}
+\lstset{
+  numbers=left, 
+  numberstyle=\tiny, 
+  numbersep=5pt,
+  tabsize=4, 
+  basicstyle=\footnotesize\sffamily,
+  commentstyle=\itshape\color{green!60!black},
+  frame=single,
+  frameround=tttt,
+  tabsize=4,
+  numbersep=8pt,
+  stepnumber=1,
+  language=avr,
+  breaklines=true,
+  % postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  breakautoindent=true
+}
 
 
 
@@ -85,20 +94,27 @@ postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}}
 \input{inputs/Eingangsimpuls erfassen.tex}
 \input{inputs/PIC-Programmierung Übungsaufgabe Nr 1.tex}
 \input{inputs/Gib das Bild eines Würfels aus.tex}
-\input{inputs/Setzten von Ports.tex}
+\input{inputs/16-Bit-Zähler + Addierer.tex}
 \input{inputs/Testprog1.tex}
-\subsubsection*{Testprog2}
-\lstinputlisting{inputs/Programme/Testprog2(1).src}
-\subsubsection*{Testprog3}
-\lstinputlisting{inputs/Programme/Testprog3.src}
-\subsubsection*{Testprog4}
-\lstinputlisting{inputs/Programme/Testprog4.src}
-\subsubsection*{Testprog5}
-\lstinputlisting{inputs/Programme/Testprog5(1).src}
-\subsubsection*{Testprog6}
-\lstinputlisting{inputs/Programme/Testprog6.src}
-\subsubsection*{Testprog7}
+\subsubsection*{Interrupts}
+\lstinputlisting{inputs/Programme/Interrupt.src}
+\subsection*{Binarycounter with Interrupts}
+\lstinputlisting{inputs/Programme/Binarycounter with Interrupt.src}
+\subsubsection*{AUFGABE 12 Delay}
 \lstinputlisting{inputs/Programme/Testprog7.src}
+%\input{inputs/Setzten von Ports.tex}
+%\subsubsection*{Testprog2}
+%\lstinputlisting{inputs/Programme/Testprog2(1).src}
+%\subsubsection*{Testprog3}
+%\lstinputlisting{inputs/Programme/Testprog3.src}
+%\subsubsection*{Testprog4}
+%\lstinputlisting{inputs/Programme/Testprog4.src}
+%\subsubsection*{Testprog5}
+%\lstinputlisting{inputs/Programme/Testprog5(1).src}
+%\subsubsection*{Testprog6}
+%\lstinputlisting{inputs/Programme/Testprog6.src}
+
+
 
     
 

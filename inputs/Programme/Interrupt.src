@@ -1,0 +1,37 @@
+;*****************
+;*************************Interrupts********************************
+;******************
+        device 16f84
+intcon      equ     0bh 
+inte        equ     4 
+intf        equ     1 
+gie         equ     7 
+status      equ     3 
+rp0         equ     5 
+option      equ     1 
+intedg      equ     6
+counter     equ     0ch 
+;startadresse fuer Programm
+    org 0
+cold
+    goto    main
+    nop
+    nop
+    nop
+isr                         ;Interrupt springt immer an Adresse 4
+    btfss   intcon,intf     ;War es ein RB0-Signal
+    goto    intend          ;Nein, Fehler
+    bcf     intcon,intf     ;Interrupt RB0 wird bearbeitet
+    incf    counter         ;Zaehler wird erhoeht intend
+    retfie                  ;Return from Interrupt enable
+ 
+main
+;Interrupts initialisieren
+    bsf     intcon,inte     ;RB0-Interrupt freischalten
+    bcf     intcon,intf     ;Interruptflag loeschen
+    bsf     status,rp0      ;auf Bank 1 schalten
+    bcf     option,intedg   ;auf Fallende Flanke pruefen
+    bcf     status,rp0      ;zurueck auf Bank0 schalten
+    bsf     intcon,gie      ;Globales Interrupt enable Bit
+loop
+    goto    loop

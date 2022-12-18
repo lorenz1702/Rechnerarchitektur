@@ -1,0 +1,15 @@
+\subsubsection*{16-Bit-Zähler + Addierer}
+In \texttt{HWert1} steht wie viele überläufe es gab.51
+\begin{lstlisting}[language=avr]
+;16-Bit_Increment -> 2Variablen
+;WertL & WertH
+incf    WertL
+btfsc   status,zero     ;Wenn 1 dann nicht springen 
+incf    WertH
+;16-Bit_Addition
+movf    Wert1L,w 
+addwf   Wert2L          ;Addiere die beiden unteren 8 Bit 
+btfsc   status,carry    ;Wenn es Ueberlauf gab, dann Hoeheres Byte +1 
+incf    Wert1H,w 
+addwf   Wert2H          ;Wieder zusammenaddieren
+\end{lstlisting}

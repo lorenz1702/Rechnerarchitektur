@@ -1,7 +1,7 @@
-\subsubsection*{Testprog1}
+\subsubsection*{Binärcodierer ohne Interrupt}
 \begin{lstlisting}[language=avr]
   ;*******************************************************
-  ; Testprog1.src
+  ; Binarycounter.src
   ;*******************************************************
     device 16f84
   ;Symbol definieren
@@ -60,15 +60,57 @@
     goto	  loop1
   
   ;Richtige Flanke gefunden
-    bcf	    porta,3
-    incf	  counter		  ;Zaehler erhoehen
-    movf 	  counter,w
-    movwf	  portb
-    btfss	  status,zero	;Zaehlerueberlauf
-    goto	  loop1
-    bsf	    porta,3		  ;Carryausgang setzen
-    goto	  loop1
+  zuruecksetzen
+    incf    counter       ;Zaehler erhoehen
+    movlw   0fh
+    andwf   counter,w
+    xorlw   10            ;Vergleich untere 4 Bits mit 10
+    btfss   status,zero
+    goto    ausgabe
+    movlw   6
+    addwf   counter
+    movlw   0a0h
+    xorwf   counter,w
+    btfss   status,zero
+    goto    ausgabe
+    clrf    counter
+    bsf     porta,3
+ ;ausgabe auf 7-Segmentanzeige 
+  ausgabe
+    movf    counter,w     ;zuerst rechte Stelle anzeigen
+    call    convert       ;in 7-Segmentanzeige umsetzen
+    movwf   portb
+    bcf     porta,4       ;Digit einschalten
+    bsf     porta,4       ;Digit wieder 
+  ausschalten
+    swapf   counter,w     ;jetzt linke Stelle anzeigen
+    call    convert
+    movwf   portb
+    bcf     porta,5
+    bsf     porta,5
+    goto    loop1
   
-    end
+ ;setzt Binaerzahl in Bitmuster fuer 7-Segmentanzeige um.
+  convert
+    andlw   15
+    addwf   pcl           ;w= offset der zum PCL addiert wird.
+    retlw   3fh           ;0
+    retlw   06h           ;1
+    retlw   5bh           ;2
+    retlw   4fh           ;3
+    retlw   66h           ;4
+    retlw   6dh           ;5
+    retlw   7dh           ;6
+    retlw   07h           ;7
+    retlw   7fh           ;8
+    retlw   6fh           ;9
+    retlw   0             ;ungueltig
+    retlw   0
+    retlw   0
+    retlw   0
+    retlw   0
+    retlw   0
+  
+  end
 
 \end{lstlisting}
