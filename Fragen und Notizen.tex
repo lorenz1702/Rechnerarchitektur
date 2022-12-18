@@ -19,6 +19,8 @@
 \usepackage{comment}
 \usepackage{lstlangarm}
 
+\usepackage{pdfpages}
+
 
 
 
@@ -85,16 +87,16 @@
 
 \newpage
 
-
+\includepdf[pages={1}]{inputs/Registerverzeichnis.pdf}
 \input{inputs/PORT RA und TRIS RA Initialisierungssequenz.tex}
 \input{inputs/Vergleich zweier Speicherstellen.tex}
 \input{inputs/Vergleich zweier Speicherstellen auf größer kleiner.tex}
-\newpage
 \input{inputs/5 Multiplikator.tex}
+\input{inputs/16-Bit-Zähler + Addierer.tex}
 \input{inputs/Eingangsimpuls erfassen.tex}
 \input{inputs/PIC-Programmierung Übungsaufgabe Nr 1.tex}
 \input{inputs/Gib das Bild eines Würfels aus.tex}
-\input{inputs/16-Bit-Zähler + Addierer.tex}
+
 \input{inputs/Testprog1.tex}
 \subsubsection*{Interrupts}
 \lstinputlisting{inputs/Programme/Interrupt.src}
